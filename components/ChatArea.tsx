@@ -189,6 +189,18 @@ const ChatArea: React.FC<ChatAreaProps> = ({ question, onAnswer, onBack, canGoBa
     }
   };
 
+  const renderBackButton = () => {
+    if (!canGoBack) return null;
+    return (
+      <button 
+        onClick={onBack}
+        className="mt-1 flex items-center gap-2 text-sm text-gray-400 hover:text-gray-600 transition-colors self-start px-2 py-1"
+      >
+        <ArrowLeft className="w-4 h-4" /> Back to previous
+      </button>
+    );
+  };
+
   // Render History
   const renderHistory = () => {
     return history.map((h, idx) => {
@@ -232,216 +244,188 @@ const ChatArea: React.FC<ChatAreaProps> = ({ question, onAnswer, onBack, canGoBa
                 </div>
               </button>
             ))}
-            
-            {canGoBack && (
-              <button 
-                onClick={onBack}
-                className="mt-1 flex items-center gap-2 text-sm text-gray-400 hover:text-gray-600 transition-colors self-start px-2 py-1"
-              >
-                <ArrowLeft className="w-4 h-4" /> Back to previous
-              </button>
-            )}
+            {renderBackButton()}
         </div>
       );
     }
 
     if (question.type === 'vehicle-form') {
       return (
-        <div className="w-full bg-white p-6 rounded-2xl border border-gray-200 shadow-sm flex flex-col gap-4">
-           <div className="grid grid-cols-1 gap-4">
-              <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider ml-1">Year</label>
-                <select 
-                  className="w-full p-4 bg-gray-50 rounded-xl border border-gray-200 focus:border-[#5621aa] focus:ring-2 focus:ring-[#5621aa]/20 outline-none transition-all text-gray-800 font-medium cursor-pointer"
-                  value={formValues.year || ''}
-                  onChange={(e) => handleInputChange('year', e.target.value)}
-                >
-                  <option value="">Select Year</option>
-                  {Array.from({ length: 30 }, (_, i) => 2025 - i).map(year => (
-                    <option key={year} value={year}>{year}</option>
-                  ))}
-                </select>
-              </div>
+        <div className="flex flex-col gap-2 w-full">
+          <div className="w-full bg-white p-6 rounded-2xl border border-gray-200 shadow-sm flex flex-col gap-4">
+             <div className="grid grid-cols-1 gap-4">
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider ml-1">Year</label>
+                  <select 
+                    className="w-full p-4 bg-gray-50 rounded-xl border border-gray-200 focus:border-[#5621aa] focus:ring-2 focus:ring-[#5621aa]/20 outline-none transition-all text-gray-800 font-medium cursor-pointer"
+                    value={formValues.year || ''}
+                    onChange={(e) => handleInputChange('year', e.target.value)}
+                  >
+                    <option value="">Select Year</option>
+                    {Array.from({ length: 30 }, (_, i) => 2025 - i).map(year => (
+                      <option key={year} value={year}>{year}</option>
+                    ))}
+                  </select>
+                </div>
 
-              <div className="flex flex-col gap-1.5">
-                 <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider ml-1">Make</label>
-                 <select
-                   className="w-full p-4 bg-gray-50 rounded-xl border border-gray-200 focus:border-[#5621aa] focus:ring-2 focus:ring-[#5621aa]/20 outline-none transition-all text-gray-800 font-medium cursor-pointer"
-                   value={formValues.make || ''}
-                   onChange={(e) => handleInputChange('make', e.target.value)}
-                 >
-                   <option value="">Select Make</option>
-                   {Object.keys(VEHICLE_DATA).map(make => (
-                     <option key={make} value={make}>{make}</option>
-                   ))}
-                 </select>
-              </div>
+                <div className="flex flex-col gap-1.5">
+                   <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider ml-1">Make</label>
+                   <select
+                     className="w-full p-4 bg-gray-50 rounded-xl border border-gray-200 focus:border-[#5621aa] focus:ring-2 focus:ring-[#5621aa]/20 outline-none transition-all text-gray-800 font-medium cursor-pointer"
+                     value={formValues.make || ''}
+                     onChange={(e) => handleInputChange('make', e.target.value)}
+                   >
+                     <option value="">Select Make</option>
+                     {Object.keys(VEHICLE_DATA).map(make => (
+                       <option key={make} value={make}>{make}</option>
+                     ))}
+                   </select>
+                </div>
 
-              <div className="flex flex-col gap-1.5">
-                 <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider ml-1">Model</label>
-                 <select
-                   className="w-full p-4 bg-gray-50 rounded-xl border border-gray-200 focus:border-[#5621aa] focus:ring-2 focus:ring-[#5621aa]/20 outline-none transition-all text-gray-800 font-medium disabled:opacity-50 disabled:bg-gray-100 disabled:cursor-not-allowed cursor-pointer"
-                   value={formValues.model || ''}
-                   onChange={(e) => handleInputChange('model', e.target.value)}
-                   disabled={!formValues.make}
-                 >
-                   <option value="">Select Model</option>
-                   {formValues.make && VEHICLE_DATA[formValues.make]?.map(model => (
-                     <option key={model} value={model}>{model}</option>
-                   ))}
-                 </select>
-              </div>
-           </div>
+                <div className="flex flex-col gap-1.5">
+                   <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider ml-1">Model</label>
+                   <select
+                     className="w-full p-4 bg-gray-50 rounded-xl border border-gray-200 focus:border-[#5621aa] focus:ring-2 focus:ring-[#5621aa]/20 outline-none transition-all text-gray-800 font-medium disabled:opacity-50 disabled:bg-gray-100 disabled:cursor-not-allowed cursor-pointer"
+                     value={formValues.model || ''}
+                     onChange={(e) => handleInputChange('model', e.target.value)}
+                     disabled={!formValues.make}
+                   >
+                     <option value="">Select Model</option>
+                     {formValues.make && VEHICLE_DATA[formValues.make]?.map(model => (
+                       <option key={model} value={model}>{model}</option>
+                     ))}
+                   </select>
+                </div>
+             </div>
 
-           <div className="flex items-center gap-3 mt-2">
-            {canGoBack && (
-              <button 
-                onClick={onBack}
-                className="px-6 py-4 rounded-full border-2 border-gray-200 text-gray-500 font-bold hover:border-gray-300 hover:text-gray-700 hover:bg-gray-50 transition-all"
+             <div className="mt-2">
+              <button
+                onClick={handleFormSubmit}
+                disabled={!formValues.year || !formValues.make || !formValues.model}
+                className="w-full bg-[#DB0064] text-white text-lg font-bold py-4 rounded-full shadow-lg hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2"
               >
-                Back
+                Next <ArrowRight className="w-5 h-5" />
               </button>
-            )}
-            <button
-              onClick={handleFormSubmit}
-              disabled={!formValues.year || !formValues.make || !formValues.model}
-              className="flex-1 bg-[#DB0064] text-white text-lg font-bold py-4 rounded-full shadow-lg hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2"
-            >
-              Next <ArrowRight className="w-5 h-5" />
-            </button>
-           </div>
+             </div>
+          </div>
+          {renderBackButton()}
         </div>
       );
     }
 
     if (question.type === 'location-form') {
       return (
-        <div className="w-full bg-white p-6 rounded-2xl border border-gray-200 shadow-sm flex flex-col gap-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider ml-1">State</label>
-                <select 
-                  className="w-full p-4 bg-gray-50 rounded-xl border border-gray-200 focus:border-[#5621aa] focus:ring-2 focus:ring-[#5621aa]/20 outline-none transition-all text-gray-800 font-medium cursor-pointer"
-                  value={formValues.state || ''}
-                  onChange={(e) => handleInputChange('state', e.target.value)}
-                >
-                  <option value="">Select</option>
-                  {['CA', 'TX', 'NY', 'FL', 'IL', 'PA', 'OH', 'GA', 'NC', 'MI'].map(st => (
-                    <option key={st} value={st}>{st}</option>
-                  ))}
-                  <option value="OT">Other</option>
-                </select>
+        <div className="flex flex-col gap-2 w-full">
+          <div className="w-full bg-white p-6 rounded-2xl border border-gray-200 shadow-sm flex flex-col gap-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider ml-1">State</label>
+                  <select 
+                    className="w-full p-4 bg-gray-50 rounded-xl border border-gray-200 focus:border-[#5621aa] focus:ring-2 focus:ring-[#5621aa]/20 outline-none transition-all text-gray-800 font-medium cursor-pointer"
+                    value={formValues.state || ''}
+                    onChange={(e) => handleInputChange('state', e.target.value)}
+                  >
+                    <option value="">Select</option>
+                    {['CA', 'TX', 'NY', 'FL', 'IL', 'PA', 'OH', 'GA', 'NC', 'MI'].map(st => (
+                      <option key={st} value={st}>{st}</option>
+                    ))}
+                    <option value="OT">Other</option>
+                  </select>
+                </div>
+
+                <div className="flex flex-col gap-1.5">
+                    <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider ml-1">Zip Code</label>
+                    <input 
+                      type="text"
+                      placeholder="12345"
+                      maxLength={5}
+                      className="w-full p-4 bg-gray-50 rounded-xl border border-gray-200 focus:border-[#5621aa] focus:ring-2 focus:ring-[#5621aa]/20 outline-none transition-all text-gray-800 font-medium placeholder:font-normal"
+                      value={formValues.zip || ''}
+                      onChange={(e) => handleInputChange('zip', e.target.value.replace(/\D/g,''))}
+                    />
+                </div>
               </div>
 
-              <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider ml-1">Zip Code</label>
-                  <input 
-                    type="text"
-                    placeholder="12345"
-                    maxLength={5}
-                    className="w-full p-4 bg-gray-50 rounded-xl border border-gray-200 focus:border-[#5621aa] focus:ring-2 focus:ring-[#5621aa]/20 outline-none transition-all text-gray-800 font-medium placeholder:font-normal"
-                    value={formValues.zip || ''}
-                    onChange={(e) => handleInputChange('zip', e.target.value.replace(/\D/g,''))}
-                  />
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3 mt-2">
-              {canGoBack && (
-                <button 
-                  onClick={onBack}
-                  className="px-6 py-4 rounded-full border-2 border-gray-200 text-gray-500 font-bold hover:border-gray-300 hover:text-gray-700 hover:bg-gray-50 transition-all"
+              <div className="mt-2">
+                <button
+                  onClick={handleFormSubmit}
+                  disabled={!formValues.state || !formValues.zip || formValues.zip.length < 5}
+                  className="w-full bg-[#DB0064] text-white text-lg font-bold py-4 rounded-full shadow-lg hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2"
                 >
-                  Back
+                  Next <ArrowRight className="w-5 h-5" />
                 </button>
-              )}
-              <button
-                onClick={handleFormSubmit}
-                disabled={!formValues.state || !formValues.zip || formValues.zip.length < 5}
-                className="flex-1 bg-[#DB0064] text-white text-lg font-bold py-4 rounded-full shadow-lg hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2"
-              >
-                Next <ArrowRight className="w-5 h-5" />
-              </button>
-            </div>
+              </div>
+          </div>
+          {renderBackButton()}
         </div>
       );
     }
 
     if (question.type === 'email-input') {
       return (
-        <div className="w-full bg-white p-6 rounded-2xl border border-gray-200 shadow-sm flex flex-col gap-4">
-           <input 
-             type="email"
-             placeholder={question.placeholder || "name@example.com"}
-             className="w-full p-4 bg-gray-50 rounded-xl border border-gray-200 focus:border-[#5621aa] focus:ring-2 focus:ring-[#5621aa]/20 outline-none transition-all text-gray-800 font-medium placeholder:text-gray-400 placeholder:font-normal"
-             value={formValues.email || ''}
-             onChange={(e) => handleInputChange('email', e.target.value)}
-             onKeyDown={(e) => {
-               if (e.key === 'Enter' && isValidEmail(formValues.email || '')) {
-                 handleFormSubmit();
-               }
-             }}
-           />
-           <div className="flex items-center gap-3 mt-2">
-            {canGoBack && (
-              <button 
-                onClick={onBack}
-                className="px-6 py-4 rounded-full border-2 border-gray-200 text-gray-500 font-bold hover:border-gray-300 hover:text-gray-700 hover:bg-gray-50 transition-all"
+        <div className="flex flex-col gap-2 w-full">
+          <div className="w-full bg-white p-6 rounded-2xl border border-gray-200 shadow-sm flex flex-col gap-4">
+             <input 
+               type="email"
+               placeholder={question.placeholder || "name@example.com"}
+               className="w-full p-4 bg-gray-50 rounded-xl border border-gray-200 focus:border-[#5621aa] focus:ring-2 focus:ring-[#5621aa]/20 outline-none transition-all text-gray-800 font-medium placeholder:text-gray-400 placeholder:font-normal"
+               value={formValues.email || ''}
+               onChange={(e) => handleInputChange('email', e.target.value)}
+               onKeyDown={(e) => {
+                 if (e.key === 'Enter' && isValidEmail(formValues.email || '')) {
+                   handleFormSubmit();
+                 }
+               }}
+             />
+             <div className="mt-2">
+              <button
+                onClick={handleFormSubmit}
+                disabled={!formValues.email || !isValidEmail(formValues.email)}
+                className="w-full bg-[#DB0064] text-white text-lg font-bold py-4 rounded-full shadow-lg hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2"
               >
-                Back
+                Next <ArrowRight className="w-5 h-5" />
               </button>
-            )}
-            <button
-              onClick={handleFormSubmit}
-              disabled={!formValues.email || !isValidEmail(formValues.email)}
-              className="flex-1 bg-[#DB0064] text-white text-lg font-bold py-4 rounded-full shadow-lg hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2"
-            >
-              Next <ArrowRight className="w-5 h-5" />
-            </button>
-           </div>
+             </div>
+          </div>
+          {renderBackButton()}
         </div>
       );
     }
 
     if (question.type === 'name-input') {
       return (
-        <div className="w-full bg-white p-6 rounded-2xl border border-gray-200 shadow-sm flex flex-col gap-4">
-           <input 
-             type="text"
-             placeholder={question.placeholder || "John Doe"}
-             className="w-full p-4 bg-gray-50 rounded-xl border border-gray-200 focus:border-[#5621aa] focus:ring-2 focus:ring-[#5621aa]/20 outline-none transition-all text-gray-800 font-medium placeholder:text-gray-400 placeholder:font-normal"
-             value={formValues.fullName || ''}
-             onChange={(e) => handleInputChange('fullName', e.target.value)}
-             onKeyDown={(e) => {
-               if (e.key === 'Enter' && formValues.fullName && formValues.fullName.length > 2) {
-                 handleFormSubmit();
-               }
-             }}
-           />
-           <div className="flex items-center gap-3 mt-2">
-            {canGoBack && (
-              <button 
-                onClick={onBack}
-                className="px-6 py-4 rounded-full border-2 border-gray-200 text-gray-500 font-bold hover:border-gray-300 hover:text-gray-700 hover:bg-gray-50 transition-all"
+        <div className="flex flex-col gap-2 w-full">
+          <div className="w-full bg-white p-6 rounded-2xl border border-gray-200 shadow-sm flex flex-col gap-4">
+             <input 
+               type="text"
+               placeholder={question.placeholder || "John Doe"}
+               className="w-full p-4 bg-gray-50 rounded-xl border border-gray-200 focus:border-[#5621aa] focus:ring-2 focus:ring-[#5621aa]/20 outline-none transition-all text-gray-800 font-medium placeholder:text-gray-400 placeholder:font-normal"
+               value={formValues.fullName || ''}
+               onChange={(e) => handleInputChange('fullName', e.target.value)}
+               onKeyDown={(e) => {
+                 if (e.key === 'Enter' && formValues.fullName && formValues.fullName.length > 2) {
+                   handleFormSubmit();
+                 }
+               }}
+             />
+             <div className="mt-2">
+              <button
+                onClick={handleFormSubmit}
+                disabled={!formValues.fullName || formValues.fullName.length < 2}
+                className="w-full bg-[#DB0064] text-white text-lg font-bold py-4 rounded-full shadow-lg hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2"
               >
-                Back
+                Next <ArrowRight className="w-5 h-5" />
               </button>
-            )}
-            <button
-              onClick={handleFormSubmit}
-              disabled={!formValues.fullName || formValues.fullName.length < 2}
-              className="flex-1 bg-[#DB0064] text-white text-lg font-bold py-4 rounded-full shadow-lg hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2"
-            >
-              Next <ArrowRight className="w-5 h-5" />
-            </button>
-           </div>
+             </div>
+          </div>
+          {renderBackButton()}
         </div>
       );
     }
 
     if (question.type === 'phone-input') {
       return (
-        <div className="w-full flex flex-col gap-4">
+        <div className="w-full flex flex-col gap-2">
           <div className="w-full bg-white p-6 rounded-2xl border border-gray-200 shadow-sm flex flex-col gap-4">
             <input 
               type="tel"
@@ -455,25 +439,19 @@ const ChatArea: React.FC<ChatAreaProps> = ({ question, onAnswer, onBack, canGoBa
                 }
               }}
             />
-            <div className="flex items-center gap-3 mt-2">
-              {canGoBack && (
-                <button 
-                  onClick={onBack}
-                  className="px-6 py-4 rounded-full border-2 border-gray-200 text-gray-500 font-bold hover:border-gray-300 hover:text-gray-700 hover:bg-gray-50 transition-all"
-                >
-                  Back
-                </button>
-              )}
+            <div className="mt-2">
               <button
                 onClick={handleFormSubmit}
                 disabled={!formValues.phone || formValues.phone.length < 14}
-                className="flex-1 bg-[#DB0064] text-white text-lg font-bold py-4 rounded-full shadow-lg hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2"
+                className="w-full bg-[#DB0064] text-white text-lg font-bold py-4 rounded-full shadow-lg hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2"
               >
                 Next <ArrowRight className="w-5 h-5" />
               </button>
             </div>
           </div>
           
+          {renderBackButton()}
+
           {question.disclaimer && (
             <div 
               className="px-4 mt-2 text-[10px] text-gray-400 leading-relaxed text-center [&_a]:underline [&_a]:text-gray-500 hover:[&_a]:text-gray-700 transition-colors"

@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { CheckCircle2, Circle } from 'lucide-react';
+import { CheckCircle, Circle } from 'lucide-react';
 
 interface SidebarProps {
   currentStepCategory: string;
@@ -19,39 +19,46 @@ const Sidebar: React.FC<SidebarProps> = ({ currentStepCategory, className = '' }
   const currentIndex = getCurrentStepIndex();
 
   return (
-    <div className={`hidden lg:flex flex-col pt-12 px-8 border-r border-gray-200 bg-white h-full ${className}`}>
-       {/* Content aligned to the right to hug the main section */}
-       <div className="w-full max-w-[220px] ml-auto">
-          <nav className="space-y-8 relative">
-             {/* Vertical Line */}
-             <div className="absolute left-[11px] top-2 bottom-2 w-0.5 bg-gray-100 -z-10" />
+    <aside className={`hidden lg:flex flex-col pt-12 pl-10 pr-6 border-r border-gray-200 bg-white h-full ${className}`}>
+        <nav className="relative w-full max-w-xs">
+            {/* Vertical Line */}
+            {/* Centered on the 24px icon (12px center). Line is 2px wide, so left should be 11px. */}
+            <div className="absolute left-[11px] top-2 bottom-2 w-0.5 bg-gray-100 -z-10" />
 
-            {STEPS.map((step, idx) => {
-              const isActive = idx === currentIndex;
-              const isCompleted = idx < currentIndex;
+            <div className="space-y-10">
+              {STEPS.map((step, idx) => {
+                const isActive = idx === currentIndex;
+                const isCompleted = idx < currentIndex;
 
-              return (
-                <div key={step.id} className="flex items-center gap-4">
-                  <div className={`relative z-10 bg-white transition-all duration-300`}>
-                    {isCompleted ? (
-                      <CheckCircle2 className="w-6 h-6 text-green-500 fill-green-50" />
-                    ) : isActive ? (
-                      <div className="w-6 h-6 rounded-full border-2 border-green-500 flex items-center justify-center">
-                        <div className="w-2.5 h-2.5 rounded-full bg-green-500" />
-                      </div>
-                    ) : (
-                      <Circle className="w-6 h-6 text-gray-300" />
-                    )}
+                return (
+                  <div key={step.id} className="flex items-center gap-4 group relative">
+                    {/* Icon Container with background to mask the line behind it */}
+                    <div className="relative bg-white z-10 p-1 -m-1 rounded-full">
+                      {isCompleted ? (
+                        <CheckCircle className="w-6 h-6 text-green-500 fill-green-50" />
+                      ) : isActive ? (
+                        <div className="w-6 h-6 rounded-full border-[2.5px] border-[#5621aa] flex items-center justify-center bg-white shadow-sm">
+                          <div className="w-2.5 h-2.5 rounded-full bg-[#5621aa]" />
+                        </div>
+                      ) : (
+                        <div className="w-6 h-6 rounded-full border-2 border-gray-200 bg-white group-hover:border-gray-300 transition-colors" />
+                      )}
+                    </div>
+                    <span 
+                      className={`text-sm font-bold uppercase tracking-wider transition-all duration-300 ${
+                        isActive ? 'text-[#5621aa]' : 
+                        isCompleted ? 'text-gray-900' : 
+                        'text-gray-400'
+                      }`}
+                    >
+                      {step.label}
+                    </span>
                   </div>
-                  <span className={`font-medium transition-colors duration-300 ${isActive || isCompleted ? 'text-[#5621aa]' : 'text-gray-400'}`}>
-                    {step.label}
-                  </span>
-                </div>
-              );
-            })}
-          </nav>
-      </div>
-    </div>
+                );
+              })}
+            </div>
+        </nav>
+    </aside>
   );
 };
 
