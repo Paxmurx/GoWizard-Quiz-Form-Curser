@@ -23,7 +23,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentStepCategory, className = '' }
         <nav className="relative w-full max-w-xs">
             {/* Vertical Line */}
             {/* Centered on the 24px icon (12px center). Line is 2px wide, so left should be 11px. */}
-            <div className="absolute left-[11px] top-2 bottom-2 w-0.5 bg-gray-100 -z-10" />
+            <div className="absolute left-[11px] top-2 bottom-2 w-0.5 bg-gray-100" />
 
             <div className="space-y-10">
               {STEPS.map((step, idx) => {

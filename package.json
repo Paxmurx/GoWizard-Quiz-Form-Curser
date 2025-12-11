@@ -12,7 +12,9 @@
     "react-dom": "^19.2.1",
     "react": "^19.2.1",
     "framer-motion": "^12.23.25",
-    "lucide-react": "^0.556.0"
+    "lucide-react": "^0.556.0",
+    "@vitejs/plugin-react": "^5.1.2",
+    "vite": "^7.2.7"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",
