@@ -210,8 +210,8 @@ const ChatArea: React.FC<ChatAreaProps> = ({ question, onAnswer, onBack, canGoBa
       return (
         <div key={`${h.questionId}-${idx}`} className="flex flex-col gap-4 mb-8 opacity-60">
            <div className="flex items-end gap-3">
-             <div className="w-8 h-8 rounded-full bg-indigo-100 flex-shrink-0 overflow-hidden">
-                <img src="https://i.pravatar.cc/150?u=agent" alt="Agent" className="w-full h-full object-cover" />
+             <div className="w-8 h-8 rounded-full bg-[#5621aa] flex-shrink-0 overflow-hidden">
+                <img src="https://i.pravatar.cc/150?img=47" alt="Agent" className="w-full h-full object-cover" />
              </div>
              <div className="bg-brand-bubble px-5 py-3 rounded-2xl rounded-bl-none text-brand-dark max-w-[80%]">
                <p>{q.text}</p>
@@ -256,45 +256,66 @@ const ChatArea: React.FC<ChatAreaProps> = ({ question, onAnswer, onBack, canGoBa
              <div className="grid grid-cols-1 gap-4">
                 <div className="flex flex-col gap-1.5">
                   <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider ml-1">Year</label>
-                  <select 
-                    className="w-full p-4 bg-gray-50 rounded-xl border border-gray-200 focus:border-[#5621aa] focus:ring-2 focus:ring-[#5621aa]/20 outline-none transition-all text-gray-800 font-medium cursor-pointer"
-                    value={formValues.year || ''}
-                    onChange={(e) => handleInputChange('year', e.target.value)}
-                  >
-                    <option value="">Select Year</option>
-                    {Array.from({ length: 30 }, (_, i) => 2025 - i).map(year => (
-                      <option key={year} value={year}>{year}</option>
-                    ))}
-                  </select>
+                  <div className="relative">
+                    <select 
+                      className="w-full p-4 pr-10 bg-gray-50 rounded-xl border border-gray-200 focus:border-[#5621aa] focus:ring-2 focus:ring-[#5621aa]/20 outline-none transition-all text-gray-800 font-medium cursor-pointer appearance-none"
+                      value={formValues.year || ''}
+                      onChange={(e) => handleInputChange('year', e.target.value)}
+                    >
+                      <option value="">Select Year</option>
+                      {Array.from({ length: 30 }, (_, i) => 2025 - i).map(year => (
+                        <option key={year} value={year}>{year}</option>
+                      ))}
+                    </select>
+                    <div className="pointer-events-none absolute inset-y-0 right-4 flex items-center text-gray-400">
+                      <svg className="w-4 h-4" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </div>
+                  </div>
                 </div>
 
                 <div className="flex flex-col gap-1.5">
                    <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider ml-1">Make</label>
-                   <select
-                     className="w-full p-4 bg-gray-50 rounded-xl border border-gray-200 focus:border-[#5621aa] focus:ring-2 focus:ring-[#5621aa]/20 outline-none transition-all text-gray-800 font-medium cursor-pointer"
-                     value={formValues.make || ''}
-                     onChange={(e) => handleInputChange('make', e.target.value)}
-                   >
-                     <option value="">Select Make</option>
-                     {Object.keys(VEHICLE_DATA).map(make => (
-                       <option key={make} value={make}>{make}</option>
-                     ))}
-                   </select>
+                   <div className="relative">
+                     <select
+                       className="w-full p-4 pr-10 bg-gray-50 rounded-xl border border-gray-200 focus:border-[#5621aa] focus:ring-2 focus:ring-[#5621aa]/20 outline-none transition-all text-gray-800 font-medium cursor-pointer appearance-none"
+                       value={formValues.make || ''}
+                       onChange={(e) => handleInputChange('make', e.target.value)}
+                     >
+                       <option value="">Select Make</option>
+                       {Object.keys(VEHICLE_DATA).map(make => (
+                         <option key={make} value={make}>{make}</option>
+                       ))}
+                     </select>
+                     <div className="pointer-events-none absolute inset-y-0 right-4 flex items-center text-gray-400">
+                       <svg className="w-4 h-4" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                         <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                       </svg>
+                     </div>
+                   </div>
                 </div>
 
                 <div className="flex flex-col gap-1.5">
                    <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider ml-1">Model</label>
-                   <select
-                     className="w-full p-4 bg-gray-50 rounded-xl border border-gray-200 focus:border-[#5621aa] focus:ring-2 focus:ring-[#5621aa]/20 outline-none transition-all text-gray-800 font-medium disabled:opacity-50 disabled:bg-gray-100 disabled:cursor-not-allowed cursor-pointer"
-                     value={formValues.model || ''}
-                     onChange={(e) => handleInputChange('model', e.target.value)}
-                     disabled={!formValues.make}
-                   >
-                     <option value="">Select Model</option>
-                     {formValues.make && VEHICLE_DATA[formValues.make]?.map(model => (
-                       <option key={model} value={model}>{model}</option>
-                     ))}
-                   </select>
+                   <div className="relative">
+                     <select
+                       className="w-full p-4 pr-10 bg-gray-50 rounded-xl border border-gray-200 focus:border-[#5621aa] focus:ring-2 focus:ring-[#5621aa]/20 outline-none transition-all text-gray-800 font-medium disabled:opacity-50 disabled:bg-gray-100 disabled:cursor-not-allowed cursor-pointer appearance-none"
+                       value={formValues.model || ''}
+                       onChange={(e) => handleInputChange('model', e.target.value)}
+                       disabled={!formValues.make}
+                     >
+                       <option value="">Select Model</option>
+                       {formValues.make && VEHICLE_DATA[formValues.make]?.map(model => (
+                         <option key={model} value={model}>{model}</option>
+                       ))}
+                     </select>
+                     <div className="pointer-events-none absolute inset-y-0 right-4 flex items-center text-gray-400">
+                       <svg className="w-4 h-4" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                         <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                       </svg>
+                     </div>
+                   </div>
                 </div>
              </div>
 
@@ -320,17 +341,24 @@ const ChatArea: React.FC<ChatAreaProps> = ({ question, onAnswer, onBack, canGoBa
               <div className="grid grid-cols-2 gap-4">
                 <div className="flex flex-col gap-1.5">
                   <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider ml-1">State</label>
-                  <select 
-                    className="w-full p-4 bg-gray-50 rounded-xl border border-gray-200 focus:border-[#5621aa] focus:ring-2 focus:ring-[#5621aa]/20 outline-none transition-all text-gray-800 font-medium cursor-pointer"
-                    value={formValues.state || ''}
-                    onChange={(e) => handleInputChange('state', e.target.value)}
-                  >
-                    <option value="">Select</option>
-                    {['CA', 'TX', 'NY', 'FL', 'IL', 'PA', 'OH', 'GA', 'NC', 'MI'].map(st => (
-                      <option key={st} value={st}>{st}</option>
-                    ))}
-                    <option value="OT">Other</option>
-                  </select>
+                  <div className="relative">
+                    <select 
+                      className="w-full p-4 pr-10 bg-gray-50 rounded-xl border border-gray-200 focus:border-[#5621aa] focus:ring-2 focus:ring-[#5621aa]/20 outline-none transition-all text-gray-800 font-medium cursor-pointer appearance-none"
+                      value={formValues.state || ''}
+                      onChange={(e) => handleInputChange('state', e.target.value)}
+                    >
+                      <option value="">Select</option>
+                      {['CA', 'TX', 'NY', 'FL', 'IL', 'PA', 'OH', 'GA', 'NC', 'MI'].map(st => (
+                        <option key={st} value={st}>{st}</option>
+                      ))}
+                      <option value="OT">Other</option>
+                    </select>
+                    <div className="pointer-events-none absolute inset-y-0 right-4 flex items-center text-gray-400">
+                      <svg className="w-4 h-4" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </div>
+                  </div>
                 </div>
 
                 <div className="flex flex-col gap-1.5">
@@ -477,8 +505,8 @@ const ChatArea: React.FC<ChatAreaProps> = ({ question, onAnswer, onBack, canGoBa
           {/* Bot Question Bubble (Thinking or Typed) */}
           <div className="flex items-end gap-3">
             <div className="relative flex-shrink-0">
-              <div className="w-10 h-10 rounded-full border-2 border-white shadow-sm overflow-hidden bg-indigo-50">
-                <img src="https://i.pravatar.cc/150?u=agent" alt="Agent" className="w-full h-full object-cover" />
+              <div className="w-10 h-10 rounded-full border-2 border-white shadow-sm overflow-hidden bg-[#5621aa]">
+                <img src="https://i.pravatar.cc/150?img=47" alt="Agent" className="w-full h-full object-cover" />
               </div>
               <div className="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-green-500 rounded-full border-2 border-white" />
             </div>
